@@ -40,3 +40,12 @@ by the highest score . */
 SELECT *
 FROM customers
 ORDER BY country ASC, score DESC
+
+-- 4th GROUP BY Query
+-- 1st question - Find the total sccore for each country
+
+SELECT 
+     country,
+     SUM(score)
+FROM customers
+GROUP BY country
