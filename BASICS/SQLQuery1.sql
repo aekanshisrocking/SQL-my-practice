@@ -46,6 +46,28 @@ ORDER BY country ASC, score DESC
 
 SELECT 
      country,
-     SUM(score)
+     SUM(score) AS total_score
 FROM customers
 GROUP BY country
+
+-- 2nd question - Find the total score and total number of customers for each country
+
+SELECT 
+     country,
+     SUM(score) AS total_score,
+     COUNT(id) AS total_customers
+FROM customers
+GROUP BY country
+
+-- 5th HAVING Query
+/* 1st question -- Find the average score for each country
+   considering only customers with a score not equal to 0
+   and return only those countries with an average score greater than 430 */
+
+SELECT
+    country,
+    AVG(score) AS avg_score 
+FROM customers
+WHERE score != 0
+GROUP BY country
+HAVING AVG(score) > 430
