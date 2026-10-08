@@ -71,3 +71,23 @@ FROM customers
 WHERE score != 0
 GROUP BY country
 HAVING AVG(score) > 430
+
+-- 6th DISTINCT Query
+/* 1st question -- Return unique list of all country */
+
+SELECT DISTINCT
+    country 
+FROM customers
+
+-- 6th TOP Query
+/* 1st question -- Retrive the TOP three customers with the Highest score */
+
+SELECT TOP 3*
+FROM customers
+ORDER BY score DESC 
+
+-- 2nd question -- Retrive the two most recent orders 
+
+SELECT TOP 2*
+FROM orders
+ORDER BY order_date DESC 
