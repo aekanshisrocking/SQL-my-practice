@@ -35,4 +35,21 @@ SET color = 'Green',
 WHERE id = 1 */
 
 SELECT *
-FROM super_cars
+FROM animals
+
+/*3rd Question- Update all animals with a NULL collar_no by setting 
+their collar_no to 0*/ 
+
+/*  UPDATE animals
+    SET collar_no = 0
+    WHERE collar_no = 'unknown'  */
+
+ -- 4th - DELETE 
+ -- 1st questio - Delete all animals with an ID greater than 5
+
+/*   DELETE FROM animals
+     WHERE pet_id > 5  */
+
+-- And for fast delete af all data use TRUNCATE
+
+-- TRUNCATE TABLE animals
