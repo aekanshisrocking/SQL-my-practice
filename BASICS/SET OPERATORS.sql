@@ -58,7 +58,8 @@ FROM Sales.Employees
 
 
 SELECT 
-       [OrderID]
+       'Orders' AS SourceTable
+      ,[OrderID]
       ,[ProductID]
       ,[CustomerID]
       ,[SalesPersonID]
@@ -73,7 +74,8 @@ SELECT
 FROM Sales.Orders
 UNION
 SELECT 
-       [OrderID]
+       'OrdersArchive' AS SourceTable
+      ,[OrderID]
       ,[ProductID]
       ,[CustomerID]
       ,[SalesPersonID]
@@ -86,3 +88,4 @@ SELECT
       ,[Sales]
       ,[CreationTime]
 FROM Sales.OrdersArchive
+ORDER BY OrderID
