@@ -51,3 +51,38 @@ SELECT
    FirstName,
    LastName
 FROM Sales.Employees
+
+-- COMBINE INFORMATION 
+-- Order data are stored in seperate tables (Orders and OrdersArchive).
+-- Q5 Combine all orders data into one report without duplicates 
+
+
+SELECT 
+       [OrderID]
+      ,[ProductID]
+      ,[CustomerID]
+      ,[SalesPersonID]
+      ,[OrderDate]
+      ,[ShipDate]
+      ,[OrderStatus]
+      ,[ShipAddress]
+      ,[BillAddress]
+      ,[Quantity]
+      ,[Sales]
+      ,[CreationTime]
+FROM Sales.Orders
+UNION
+SELECT 
+       [OrderID]
+      ,[ProductID]
+      ,[CustomerID]
+      ,[SalesPersonID]
+      ,[OrderDate]
+      ,[ShipDate]
+      ,[OrderStatus]
+      ,[ShipAddress]
+      ,[BillAddress]
+      ,[Quantity]
+      ,[Sales]
+      ,[CreationTime]
+FROM Sales.OrdersArchive
