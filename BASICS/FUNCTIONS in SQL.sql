@@ -96,3 +96,46 @@ SELECT
 -10,
 ABS(-10),
 ABS(10)
+
+-- DATE AND TIME FUNCTIONS
+-- Returns the current date and time at the moment when the query is executed
+
+SELECT
+CreationTime,
+GETDATE() TODAY
+FROM Sales.Orders
+
+-- PART Extraction
+-- For DAY, MONTH , YEAR 
+
+SELECT
+OrderID,
+CreationTime,
+YEAR(CreationTime) Year,
+DAY(CreationTime) Day,
+MONTH(CreationTime) Month
+FROM Sales.Orders
+
+-- DATE PART() --
+
+SELECT
+CreationTime,
+DATEPART(year, CreationTime) AS year_dp,
+DATEPART(hour, CreationTime) AS hour_dp
+FROM Sales.Orders
+
+-- DATE NAME -- SYNTAX same as datepart
+
+SELECT
+CreationTime,
+DATENAME(month, CreationTime) AS month_dn,
+DATENAME(weekday, CreationTime) AS week_dn
+FROM Sales.Orders
+
+-- DATETRUNC 
+
+SELECT 
+DATETRUNC(month, CreationTime) Creation,
+COUNT(*)
+FROM Sales.Orders
+GROUP BY DATETRUNC(month, CreationTime)
