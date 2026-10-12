@@ -139,3 +139,32 @@ DATETRUNC(month, CreationTime) Creation,
 COUNT(*)
 FROM Sales.Orders
 GROUP BY DATETRUNC(month, CreationTime)
+
+-- EOMONTH --
+
+SELECT 
+OrderID,
+EOMONTH(CreationTime) EndOfMonth
+FROM Sales.Orders
+
+-- PRACTICE QUESTIONS --
+-- Q1 -How many orders were placed each year ? 
+SELECT
+YEAR(OrderDate) ,
+COUNT(*)
+FROM Sales.Orders
+GROUP BY YEAR(OrderDate)
+
+
+-- Q2- How many orders were placed each month ? 
+SELECT
+MONTH(OrderDate) ,
+COUNT(*)
+FROM Sales.Orders
+GROUP BY MONTH(OrderDate)
+
+-- Q3- Show all orders that were placed during the month of february 
+
+SELECT *
+FROM Sales.Orders
+WHERE MONTH(OrderDate) = 2
