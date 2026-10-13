@@ -168,3 +168,16 @@ GROUP BY MONTH(OrderDate)
 SELECT *
 FROM Sales.Orders
 WHERE MONTH(OrderDate) = 2
+
+-- DATE AND TIME --
+-- FORMATTING --
+-- Formating date 
+
+SELECT 
+OrderID,
+CreationTime,
+FORMAT(CreationTime, 'MM-dd-yyyy') USA_Format,
+FORMAT(CreationTime, 'dd') dd,
+FORMAT(CreationTime, 'ddd') ddd,
+FORMAT(CreationTime, 'dddd') dddd
+FROM Sales.Orders  
