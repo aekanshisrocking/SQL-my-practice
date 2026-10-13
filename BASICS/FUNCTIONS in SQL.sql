@@ -177,7 +177,65 @@ SELECT
 OrderID,
 CreationTime,
 FORMAT(CreationTime, 'MM-dd-yyyy') USA_Format,
+FORMAT(CreationTime, 'dd-MM-yyyy') EURO_Format,
 FORMAT(CreationTime, 'dd') dd,
 FORMAT(CreationTime, 'ddd') ddd,
 FORMAT(CreationTime, 'dddd') dddd
 FROM Sales.Orders  
+
+/* Show CreationTime using the following format :
+  Day Wed Jan Q1 2026 12:34:56 PM */
+
+SELECT
+OrderID,
+CreationTime,
+'DAY '+ FORMAT(CreationTime, 'ddd MMM') + 
+' Q' + DATENAME(quarter, CreationTime) + ' ' +
+FORMAT(CreationTime, 'yyyy hh:mm:ss tt')   AS CustomeFormat
+FROM Sales.Orders
+
+-- DATA Aggregations     Formating use case-- 
+
+SELECT 
+FORMAT(OrderDate, 'MMM yy') OrderDate, 
+COUNT(*)
+FROM Sales.Orders
+GROUP BY FORMAT(OrderDate, 'MMM yy')
+
+-- CONVERT 
+
+SELECT
+CONVERT(INT, '123') AS [String to INT convert],
+CONVERT(DATE, '2025-08-20') AS [String to Date convert]
+FROM Sales.Orders
+
+SELECT
+CONVERT(DATE, '2025-08-20') AS [String to Date convert],
+CONVERT(VARCHAR, CreationTime, 32) AS {USA std. style:32}
+FROM Sales.Orders
+
+-- DATE ADD -- 
+
+SELECT
+OrderID,
+CreationTime,
+DATEADD(month, 3, OrderDate) AS ThreeMonthsLater,
+DATEADD(year, 2, OrderDate) AS TwoYearsLater
+FROM Sales.Orders
+
+-- DATEDIFF --
+-- Q1 - Calculate the age of employees
+
+SELECT
+EmployeeID,
+BirthDate,
+DATEDIFF(year, BirthDate, GETDATE()) Age 
+FROM Sales.Employees
+
+-- Q2 - Find the average shipping duration in days for each month  
+
+SELECT
+OrderID,
+OrderDate,
+ShipDate
+FROM Sales.Orders
