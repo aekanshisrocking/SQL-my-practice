@@ -241,7 +241,7 @@ FROM Sales.Orders
 GROUP BY MONTH(OrderDate)
 
 -- Time Gap Analysis
--- Find the number of days between each order and the previous order 
+-- Q3 Find the number of days between each order and the previous order 
 
 SELECT 
 OrderID,
@@ -249,3 +249,24 @@ OrderDate CurrentOrderDate,
 LAG(OrderDate) OVER (ORDER BY OrderDate) PreviousOrderDate,
 DATEDIFF(day, LAG(OrderDate) OVER (ORDER BY OrderDate), OrderDate) nrofdays
 FROM Sales.Orders
+
+-- ISDATE -- EXAMPLES
+
+SELECT 
+ISDATE('123') DateCheck1,
+ISDATE('2026-08-24')  DateCheck2,
+ISDATE('2026') DateCheck1
+
+-- EX 2 
+SELECT 
+   OrderDate,
+   ISDATE(OrderDate),
+   CASE WHEN ISDATE(OrderDate) = 1 THEN CAST(OrderDate AS DATE)
+   END NewOrderDate
+FROM 
+(
+   SELECT '2025-08-20' AS OredrDate UNION
+   SELECT '2025-08-21' UNION
+   SELECT '2025-08-23' UNION
+   SELECT '2025-08'
+)
