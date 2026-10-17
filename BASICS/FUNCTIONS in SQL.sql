@@ -1,4 +1,5 @@
 -- FUNCTIONS --
+-- SINGLE ROW FUNCTIONS 
 
 --STRING--
 
@@ -308,7 +309,7 @@ COALESCE(Score, 0) + 10 AS ScoreWithBonus
 FROM Sales.Customers                                       -----
 
 -- Sorting Data 
--- Q - Sort the customers from lowest to hoighest score, with nulls appearing last 
+-- Q - Sort the customers from lowest to heighest score, with nulls appearing last 
 
 SELECT
 CustomerID,
@@ -324,3 +325,51 @@ CustomerID,
 Score
 FROM Sales.Customers          
 ORDER BY CASE WHEN Score IS NULL THEN 1 ELSE 0 END, Score
+
+-- NULLIF -- Division By Zero 
+-- Q1- Find the sales price for each order by dividing sales by quantity
+
+SELECT
+OrderID,
+Sales,
+Quantity,
+Sales/NULLIF(Quantity, 0) AS Price
+FROM Sales.Orders
+
+-- IS NULL                                         -- FILTERING data
+-- Q2 - Identify the customers who have no score 
+
+SELECT *
+FROM Sales.Customers
+WHERE Score IS NULL
+
+-- IS NOT NULL
+-- Q3 - Identify the customers who have score 
+
+SELECT *
+FROM Sales.Customers
+WHERE Score IS NOT NULL
+
+-- IS NULL - ANTI JOINS 
+--Q1 - List all details for customers who have not placed any orders - LEFT ANTI JOIN
+
+SELECT 
+c.*,
+o.OrderID
+FROM Sales.Customers c
+LEFT JOIN Sales.Orders o
+ON c.CustomerID = o.CustomerID
+WHERE o.CustomerID IS NULL
+
+-- NULL vs Empty vs Space
+
+WITH Orders AS (
+SELECT 1 Id, 'A' Category UNION 
+SELECT 2, NULL UNION 
+SELECT 3, '' UNION 
+SELECT 4, ' ' 
+)
+SELECT *,
+DATALENGTH (Category) CategoryLen,
+DATALENGTH (TRIM(Category)) Policy
+FROM Orders
