@@ -262,11 +262,23 @@ SELECT
    OrderDate,
    ISDATE(OrderDate),
    CASE WHEN ISDATE(OrderDate) = 1 THEN CAST(OrderDate AS DATE)
+        ELSE '9999-01-01'
    END NewOrderDate
 FROM 
 (
-   SELECT '2025-08-20' AS OredrDate UNION
+   SELECT '2025-08-20' AS OrderDate UNION
    SELECT '2025-08-21' UNION
    SELECT '2025-08-23' UNION
    SELECT '2025-08'
-)
+)t
+
+-- NULL Functions
+-- Find the average scores of the customers
+
+SELECT
+CustomerID,
+Score,
+COALESCE(Score, 0) Score2,
+AVG(Score) OVER () AvgScores,
+AVG(COALESCE(Score, 0)) OVER() AvgScores2  -- replaced NULL with zero 
+FROM Sales.Customers
