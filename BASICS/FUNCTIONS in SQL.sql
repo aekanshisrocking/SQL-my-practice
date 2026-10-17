@@ -273,6 +273,7 @@ FROM
 )t
 
 -- NULL Functions
+-- DATA aggregations
 -- Find the average scores of the customers
 
 SELECT
@@ -282,3 +283,44 @@ COALESCE(Score, 0) Score2,
 AVG(Score) OVER () AvgScores,
 AVG(COALESCE(Score, 0)) OVER() AvgScores2  -- replaced NULL with zero 
 FROM Sales.Customers
+
+-- Mathematical Operations
+/* Dispaly the full name of customers in a single field by merging their first and last names, 
+and add 10 bonus points to each customer's score. */
+
+SELECT                                    ----
+CustomerID,
+FirstName,
+LastName,
+FirstName + ' ' + LastName AS FullName,    -- STEP 1 (with mistakes)
+Score,
+Score + 10 AS ScoreWithBonus
+FROM Sales.Customers                      ----  
+-----------------------------------------------------------------------------------------------
+SELECT                                                  --------
+CustomerID,
+FirstName,
+LastName,
+COALESCE(LastName, '') LastName2,     -- can remove this line 
+FirstName + ' ' + COALESCE(LastName, '') AS FullName,   ---- STEP 2
+Score,
+COALESCE(Score, 0) + 10 AS ScoreWithBonus
+FROM Sales.Customers                                       -----
+
+-- Sorting Data 
+-- Q - Sort the customers from lowest to hoighest score, with nulls appearing last 
+
+SELECT
+CustomerID,
+Score,
+COALESCE(Score, 9999)
+FROM Sales.Customers          --METHOD 1- Replace the NULLs with a very big no.
+ORDER BY COALESCE(Score, 9999)    -- its a lazy method btw
+
+-- METHOD 2 
+
+SELECT
+CustomerID,
+Score
+FROM Sales.Customers          
+ORDER BY CASE WHEN Score IS NULL THEN 1 ELSE 0 END, Score
