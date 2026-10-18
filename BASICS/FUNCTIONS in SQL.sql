@@ -445,3 +445,33 @@ FROM Sales.Customers
 
 -- 3rd USE Case - Handling NULLs 
 -- Q1- Find the average scores of customers and tret NULLs as 0 , Additionally provide details such CustomerID and LastName 
+
+SELECT 
+CustomerID,
+LastName,
+Score,
+CASE 
+    WHEN Score IS NULL THEN 0
+    ELSE Score
+END ScoreClean,
+
+AVG(CASE 
+    WHEN Score IS NULL THEN 0
+    ELSE Score
+END ) OVER () AvgCustomerClean,
+
+AVG(Score) OVER() AvgCustomer
+FROM Sales.Customers
+
+-- 4th USE case - Conditional Aggregation 
+-- Q1- Count how many times each coustomer has made an order with sales greater than 30  
+
+SELECT 
+CustomerID,
+SUM(CASE 
+   WHEN Sales > 30 THEN 1
+   ELSE 0
+END) TotalOrdersSales,
+COUNT(*) TotalOrders
+FROM Sales.Orders
+GROUP BY CustomerID
