@@ -1,4 +1,4 @@
--- FUNCTIONS --
+ -- FUNCTIONS --
 -- SINGLE ROW FUNCTIONS 
 
 --STRING--
@@ -388,7 +388,7 @@ TRIM(Category) Policy1,
 NULLIF(TRIM(Category), '') Policy2
 FROM Orders
 
--- CASE Statement --
+-- CASE Statement 1 --
 /* Q1- Create report showing total sales for each of the following categories: 
    High (sales over 50), Medium (sales 21-50), and Low (sales 20 or less)
    Sort the categories from highest sales to lowest */
@@ -408,3 +408,40 @@ FROM(
 )t
 GROUP BY Category
 ORDER BY TotalSales DESC
+
+-- CASE Statement 2 -
+--Q1 - Retrive employee details with gender displayed as full text 
+
+SELECT 
+EmployeeID,
+FirstName,
+LastName,
+Gender,
+CASE 
+   WHEN Gender = 'F' THEN 'Female'
+   WHEN Gender = 'M' THEN 'Male'
+   ELSE 'Not Available'
+END GenderFullText
+FROM Sales.Employees
+
+--Q2 - Retrive customers details with abbreviated country code 
+
+SELECT 
+CustomerID,
+FirstName,
+LastName,
+Country, CASE 
+   WHEN Country = 'Germany' THEN 'DE'
+   WHEN Country = 'USA' THEN 'US'
+   ELSE 'n/a'
+END CountryAbbr,
+
+CASE Country
+   WHEN  'Germany' THEN 'DE'       -- OR Can use this shortcut 
+   WHEN  'USA' THEN 'US'
+   ELSE 'n/a'
+END CountryAbbr2
+FROM Sales.Customers
+
+-- 3rd USE Case - Handling NULLs 
+-- Q1- Find the average scores of customers and tret NULLs as 0 , Additionally provide details such CustomerID and LastName 
